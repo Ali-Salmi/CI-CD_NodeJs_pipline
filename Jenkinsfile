@@ -24,8 +24,8 @@ pipeline {
                    def ec2Instance = "ec2-user@3.72.109.42"
                    def scriptShell="bash ./script.sh alisalmi/jenkins_repo:${BUILD_NUMBER}"
                    sshagent(['ec2-server-key']) {
-                     sh "cp docker-compose.yaml ${ec2Instance}:/home/uc2-user"
-                     sh "cp script.sh ${ec2Instance}:/home/uc2-user"
+                     sh "scp -o StrictHostKeyChecking=no docker-compose.yaml ${ec2Instance}:/home/uc2-user"
+                     sh "scp -o StrictHostKeyChecking=no script.sh ${ec2Instance}:/home/uc2-user"
                      sh "ssh -o StrictHostKeyChecking=no ${ec2Instance} ${scriptShell}"
                    }
                 }
