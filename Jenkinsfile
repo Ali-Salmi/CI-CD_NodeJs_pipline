@@ -22,9 +22,11 @@ pipeline {
                 script{
                    echo 'deploying docker image to EC2...'
                    def ec2Instance = "ec2-user@3.72.109.42"
-                  def dockerRun = "docker run -d -p3000:80 alisalmi/jenkins_repo:${BUILD_NUMBER}"
+                   def scriptShell="bash script.sh alisalmi/jenkins_repo:${BUILD_NUMBER}"
                    sshagent(['ec2-server-key']) {
-                     sh "ssh -o StrictHostKeyChecking=no ${ec2Instance} ${dockerRun}"
+                     sh "scp docker-compose.yaml ${ec2Instance}:/home/uc2-user"
+                     sh "scp script.sh ${ec2Instance}:/home/uc2-user"
+                     sh "ssh -o StrictHostKeyChecking=no ${ec2Instance} ${scriptShell}"
                    }
                 }
             }
