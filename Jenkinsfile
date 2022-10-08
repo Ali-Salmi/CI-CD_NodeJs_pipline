@@ -21,7 +21,7 @@ pipeline {
             steps {
                 script{
                    echo 'deploying docker image to EC2...'
-                   def ec2Instance = "ec2-user@3.72.109.42"
+                   def ec2Instance = "ec2-user@52.59.194.241"
                    def scriptShell="bash ./script.sh alisalmi/jenkins_repo:${BUILD_NUMBER}"
                    sshagent(['ec2-server-key']) {
                      sh "scp -o StrictHostKeyChecking=no docker-compose.yaml ${ec2Instance}:/home/uc2-user"
